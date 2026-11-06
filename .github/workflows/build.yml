@@ -1,0 +1,43 @@
+name: build-mrs
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # 北京时间 08:00，晚于 AgentRoute 的 06:30 计划构建
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-mrs
+  cancel-in-progress: false
+
+env:
+  MIHOMO_VERSION: v1.19.33
+  MIHOMO_SHA256: 132f6f3edf9a65e62f04853aed3358472e0b2b7666daa8419edfa2ddf5bb6323
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 下载并校验官方 mihomo
+        run: |
+          curl -fsSL -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
+          echo "${MIHOMO_SHA256}  mihomo.gz" | sha256sum -c -
+          gunzip mihomo.gz && chmod +x mihomo && ./mihomo -v
+
+      - name: 转换并校验
+        run: python3 scripts/build.py ./mihomo dist
+
+      - name: 发布到 release 分支（单提交滚动）
+        run: |
+          cp LICENSE NOTICE.md dist/
+          cd dist
+          git init -q -b release
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "mrs $(python3 -c 'import json;print(json.load(open("manifest.json"))["source_generated_at_utc"])')"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" release
