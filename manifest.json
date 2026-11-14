@@ -1,0 +1,34 @@
+{
+  "source": "https://github.com/ryuu-restart/agent-route",
+  "source_generated_at_utc": "2026-11-14T02:37:12.510105+00:00",
+  "datasets": {
+    "private": {
+      "behavior": "domain",
+      "entries": 132,
+      "yaml_sha256": "cf90beec68da49318d2c94b5ccf1cc68b12dad979cc0bbec3ba5afb0b16ebd3a",
+      "mrs_sha256": "df452ab1bfb572f366f00001fa4525f16f137dc670aed2c60af0100dc397d3ec",
+      "mrs_bytes": 781
+    },
+    "proxy": {
+      "behavior": "domain",
+      "entries": 27352,
+      "yaml_sha256": "12b72a58c5d7b899ed6b83bb0acef79e6c62ebb90469d0909b23ce33d57e994c",
+      "mrs_sha256": "d8c99e8775c9ef9ab112a6784d7507aca3fd84d2c45fc6961f955fd9c24c948d",
+      "mrs_bytes": 199519
+    },
+    "direct": {
+      "behavior": "domain",
+      "entries": 109687,
+      "yaml_sha256": "b4723b186889bae49c7d5b4773d28d3a85945874c34fbb6645396bc210da1578",
+      "mrs_sha256": "4c708609c291eb10999453d7cf79172cee319360bba77e633b7d0887f35c5713",
+      "mrs_bytes": 527466
+    },
+    "cn-ip": {
+      "behavior": "ipcidr",
+      "entries": 9640,
+      "yaml_sha256": "8a0acc418a665b9a04fe9b82912ba16484404555bd114994a3426acbaea748da",
+      "mrs_sha256": "81c8ab36f71f8a8f1440acdd6316730f8735e3aab26da7bde8de9faaf309463c",
+      "mrs_bytes": 37429
+    }
+  }
+}
